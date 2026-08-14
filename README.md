@@ -6,22 +6,6 @@ Built for the **WebVeda assignment**, with a focus on resilient API handling, gr
 
 ---
 
-## 📋 Table of Contents
-
-* [Overview](#-overview)
-* [Architecture](#-architecture)
-* [Project Structure](#-project-structure)
-* [Key Engineering Decisions](#-key-engineering-decisions)
-
-  * [Resilient Async Data Fetching](#1-resilient-async-data-fetching)
-  * [Precise Currency Math & Localization](#2-precise-currency-math--localization)
-  * [Framer Property Controls](#3-framer-property-controls)
-  * [Responsive Layout](#4-fluid-responsive-layout)
-* [UI State Machine](#-ui-state-machine)
-* [Resilience Strategy](#-resilience-strategy)
-
----
-
 ## 🚀 Overview
 
 **Skillpath** is a course catalog landing page implemented inside **Framer** with modular React components written in TypeScript.
