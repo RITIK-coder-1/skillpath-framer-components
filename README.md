@@ -48,6 +48,7 @@ skillpath/
     ├── course_types.ts
     └── course_property_controls.ts
 ```
+The project follows a modular architecture designed to enforce a strict separation of concerns. Data fetching, state orchestration, and API error handling are isolated into a custom useCourse hook, keeping the presentation components (CourseSection, CourseCard) lightweight, declarative, and focused entirely on rendering UI states. Breaking out dedicated types, reusable UI sub-components, and API logic ensures the codebase remains maintainable, easy to test, and aligned with standard production React practices without compromising on Framer's internal compilation model.
 
 ### Architectural responsibilities
 
