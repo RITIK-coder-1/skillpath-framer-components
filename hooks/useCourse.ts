@@ -10,6 +10,9 @@ import type {
   CountryCode,
 } from "../types/course_types.ts";
 
+// the base URL for the API calls
+const baseUrl = "https://syncsphere-hiv6.onrender.com";
+
 /* ---------------------------------------------------------------------------------
 custom hook
 ----------------------------------------------------------------------------------- */
@@ -33,8 +36,6 @@ export default function useCourse(): CourseHookData {
 
   // stores an error from the country API
   const [countryError, setCountryError] = useState<string | null>(null);
-
-  const baseUrl = "https://syncsphere-hiv6.onrender.com"; // the base URL for the API calls
 
   /* ---------------------------------------------------------------------------------
     fetch course data
