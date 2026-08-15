@@ -225,7 +225,7 @@ This keeps visual configuration separate from application logic while making the
 The course catalog uses a fluid CSS Grid:
 
 ```css
-grid-template-columns: repeat(auto-fit, minmax(208px, 1fr));
+grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
 ```
 
 This allows the grid to automatically adapt to the available viewport width rather than relying on rigid breakpoint-specific column definitions.
