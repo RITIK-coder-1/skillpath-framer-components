@@ -113,8 +113,11 @@ addPropertyControls(CourseSection, {
 
   courseCardGap: {
     type: ControlType.Number,
-    title: "courseCardGap",
+    title: "Card Gap",
     defaultValue: 24,
+    min: 8,
+    max: 64,
+    displayStepper: true,
   },
 });
 
