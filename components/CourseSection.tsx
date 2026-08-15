@@ -11,6 +11,11 @@ import type { CourseSectionProps } from "../types/course_property_controls.ts";
 import { addPropertyControls, ControlType } from "framer";
 import type { CSSProperties } from "react";
 
+/**
+ * @framerSupportedLayoutWidth any
+ * @framerSupportedLayoutHeight auto
+ */
+
 /* ---------------------------------------------------------------------------------
 course section component
 ----------------------------------------------------------------------------------- */
