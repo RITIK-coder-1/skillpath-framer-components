@@ -4,7 +4,7 @@ A resilient, production-grade course catalog landing page built inside **Framer*
 
 Built for the **WebVeda assignment**, with a focus on resilient API handling, graceful failure states, responsive UI architecture, precise currency formatting, and designer-friendly Framer Property Controls.
 
-**LIVE LINK:** https://resilient-champion-660045.framer.app/
+**LIVE LINK:** https://skillpath-ritik.framer.website/
 
 ---
 
