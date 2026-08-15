@@ -86,8 +86,18 @@ export default function CourseSection({
             price={
               countryCode
                 ? countryCode === "IN"
-                  ? `₹${course.priceRupee.toLocaleString("en-IN")}`
-                  : `$${course.priceUsdDollar.toFixed(2)}`
+                  ? new Intl.NumberFormat("en-IN", {
+                      style: "currency",
+                      currency: "INR",
+                      minimumFractionDigits: 0,
+                      maximumFractionDigits: 2,
+                    }).format(course.priceRupee)
+                  : new Intl.NumberFormat("en-US", {
+                      style: "currency",
+                      currency: "USD",
+                      minimumFractionDigits: 2,
+                      maximumFractionDigits: 2,
+                    }).format(course.priceUsdDollar)
                 : countryLoading
                 ? "Loading price..."
                 : "Refresh to view price"
