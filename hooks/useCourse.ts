@@ -100,6 +100,7 @@ export default function useCourse(): CourseHookData {
     ----------------------------------------------------------------------------------- */
 
   useEffect(() => {
+    // In a production app, I would use an AbortController here to cancel in-flight requests on unmount. Omitted here as this is a single-page app.
     fetchCourses();
     fetchCountryCode();
   }, []);
