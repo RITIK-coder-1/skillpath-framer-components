@@ -18,7 +18,7 @@ export interface Course {
   description: string;
   mainCategory: string;
   shortCourse: string;
-  courseType: "Original" | string; // Restricted to 'Original' or string if more types exist
+  courseType: string;
   pricePaise: number;
   priceUsdCents: number;
   mangoId: string;
