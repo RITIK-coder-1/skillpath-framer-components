@@ -255,16 +255,28 @@ This keeps visual configuration separate from application logic while making the
 The course catalog uses a fluid CSS Grid:
 
 ```css
-grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
 ```
 
-This allows the grid to automatically adapt to the available viewport width rather than relying on rigid breakpoint-specific column definitions.
+Rather than hardcoding breakpoint-specific column counts, the grid resolves column count from
+available width, combined with a capped container (`maxWidth: 1200px`). This was deliberate:
+the brief notes the course count varies between 5 and 10 per API call, so a fixed-breakpoint
+grid built around an assumed card count would look uneven whenever the actual count didn't
+divide cleanly into the row size. A fluid grid sidesteps that by never assuming a round number.
 
-The result is a layout that scales naturally across:
+Verified against the brief's 3/2/1 requirement across real device widths in Chrome DevTools:
 
-* Mobile
-* Tablet
-* Desktop
+| Viewport            | Width  | Columns |
+|----------------------|--------|---------|
+| iPhone 16 Pro Max     | 440px  | 1       |
+| iPad Mini             | 768px  | 2       |
+| iPad Air              | 820px  | 2       |
+| iPad Pro              | 1024px | 2       |
+| Desktop               | 1200px+| 3       |
+
+The grid resolves to 1 / 2 / 3 columns across mobile, tablet, and desktop-class widths
+— the column count is a direct function of the 320px card floor and the 1200px container cap, so it stays correct even as the course
+count varies between 5 and 10 per call.
 
 ### Description truncation
 
