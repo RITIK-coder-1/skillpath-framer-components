@@ -86,7 +86,9 @@ export default function useCourse(): CourseHookData {
 
   const fetchCourses = async () => {
     try {
-      const response = await fetch(`${baseUrl}/assignment/course-data`);
+      const response = await fetch(`${baseUrl}/assignment/course-data`, {
+        method: "GET",
+      });
 
       // if the response is not successful, throw an error
       if (!response.ok) {
@@ -125,7 +127,9 @@ export default function useCourse(): CourseHookData {
 
   const fetchCountryCode = async () => {
     try {
-      const response = await fetch(`${baseUrl}/assignment/country-code`);
+      const response = await fetch(`${baseUrl}/assignment/country-code`, {
+        method: "GET",
+      });
 
       if (!response.ok) {
         throw new Error(`Country API returned ${response.status}`);
