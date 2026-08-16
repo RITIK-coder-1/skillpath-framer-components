@@ -91,6 +91,7 @@ Encapsulates the asynchronous API logic and associated UI state, including:
 * Course data fetching.
 * Country-code fetching.
 * HTTP error handling.
+* Runtime validation of response shapes before they're trusted by the UI.
 * Loading state.
 * Course-fetch errors.
 * Partial failure handling.
@@ -152,7 +153,35 @@ This preserves the primary user goal — discovering courses — even when secon
 
 ---
 
-### 2. Precise Currency Math & Localization
+### 2. Runtime Response Validation
+
+Checking `response.ok` only confirms the *request* succeeded — it says nothing about whether the *payload* actually matches what the UI expects. A `200 OK` response with a missing field, a wrong type, or an unexpected root shape would pass every check above and still break rendering downstream.
+
+To close that gap, the API response is parsed as `unknown` rather than trusted directly, and validated with runtime type guards before any component code touches it:
+
+```ts
+function isValidCourse(value: unknown): value is Course {
+    // checks each field is present and correctly typed
+}
+
+function isValidCourseArray(value: unknown): value is Course[] {
+    return Array.isArray(value) && value.every(isValidCourse)
+}
+```
+
+If validation fails, the response is treated the same way as an HTTP error — it falls into the existing `catch` block and produces the same error state the UI already handles. No new failure path is introduced; this only closes the gap between "the request succeeded" and "the response is safe to render."
+
+#### Why `Number.isFinite`, not just `typeof`
+
+`typeof NaN === "number"` is true in JavaScript. A bare `typeof` check would let a malformed price field through and silently render as `₹NaN` on a live card — a worse outcome than a visible error, since it looks like a working price. `Number.isFinite()` rejects `NaN` and `Infinity`, so a broken price value causes the course to fail validation rather than render incorrect pricing to a user.
+
+#### Why this matters beyond the assignment
+
+The brief's flaky-API behavior is scoped to `404`/`500` responses. A production LMS backend can also return a `200` with a shape that's drifted from what the client expects — an added field, a renamed field, a null where a string was expected. Validating at the response boundary means the UI is defended against that class of failure too, not just the two status codes explicitly documented for this assignment.
+
+---
+
+### 3. Precise Currency Math & Localization
 
 The API provides prices using integer-based currency units.
 
@@ -191,7 +220,7 @@ If the country-code request fails, the application avoids displaying potentially
 
 ---
 
-### 3. Canvas-Native Property Controls
+### 4. Canvas-Native Property Controls
 
 The implementation uses Framer's `addPropertyControls` functionality to expose useful configuration options (course section heading and the gap among the course cards) directly inside the visual canvas.
 
@@ -221,7 +250,7 @@ This keeps visual configuration separate from application logic while making the
 
 ---
 
-### 4. Fluid Responsive Layout
+### 5. Fluid Responsive Layout
 
 The course catalog uses a fluid CSS Grid:
 
@@ -355,6 +384,10 @@ The application preserves as much functionality as possible when a non-critical 
 
 TypeScript interfaces define the expected shape of API data and component contracts.
 
+### Runtime validation
+
+Compile-time types alone don't protect against a response that doesn't match its declared type at runtime. Type guards re-check the actual shape of parsed JSON before it's used, so an unexpected payload fails safely instead of propagating into the UI.
+
 ### Designer-friendly configuration
 
 Visual properties that are likely to change are exposed through Framer's Property Controls rather than requiring code changes.
@@ -373,6 +406,7 @@ Rather than simply rendering the happy path, the application explicitly accounts
 
 * Network/API failures
 * HTTP `404` and `500` responses
+* Malformed or unexpected response shapes on `200 OK`
 * Empty datasets
 * Partial API failures
 * Dynamic currency localization
