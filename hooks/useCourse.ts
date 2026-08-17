@@ -47,7 +47,7 @@ function isValidCourseArray(value: unknown): value is Course[] {
 
 // checks the country response is an object with country_code set to exactly "IN" or "US"
 function isValidCountryCode(value: unknown): value is CountryCode {
-  if (typeof value !== "object" || value === null) {
+  if (typeof value !== "object" || value === null || Array.isArray(value)) {
     return false;
   }
 
