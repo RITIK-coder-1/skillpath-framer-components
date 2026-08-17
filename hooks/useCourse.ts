@@ -20,7 +20,7 @@ these validate that a parsed JSON response actually matches the shape I expect,
 
 // checks a single course object has the fields the UI actually renders, with the right types.
 function isValidCourse(value: unknown): value is Course {
-  if (typeof value !== "object" || value === null) {
+  if (typeof value !== "object" || value === null || Array.isArray(value)) {
     return false;
   }
 
